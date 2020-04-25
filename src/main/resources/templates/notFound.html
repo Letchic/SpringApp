@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Result of submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<body>
+<h1>User Information</h1>
+    <p th:text="'User ' + ${user.lastName} + ' '+${user.firstName} + ' not found'"/>
+    <a href="/user">Choose another user</a>
+</body>
+</html>
