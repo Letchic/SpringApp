@@ -1,7 +1,6 @@
 package com.letchic.model;
 
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +15,32 @@ public class User {
     private String email;
     private String workAddres;
     private String browserName;
-    private String timeZone;
+    private String time;
+    private String message;
+    private String result;
 
-    public String getTimeZone() {
-
-        return timeZone;
+    public String getResult() {
+        return result;
     }
 
-    public void setTimeZone(String timeZone) {
-        this.timeZone = timeZone;
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getFirstName() {
@@ -103,13 +119,7 @@ public class User {
          return list;
     }
 
-    public String getFileName() {
-        return firstName+lastName;
-    }
-
-
         public String readFromCsvFile(MultipartFile file){
-
             if (!file.isEmpty()) {
                 try {
                     byte[] bytes = file.getBytes();
@@ -135,8 +145,6 @@ public class User {
             }
             return "User added";
         }
-
-
 }
 
 

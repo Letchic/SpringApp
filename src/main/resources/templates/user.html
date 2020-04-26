@@ -7,43 +7,78 @@
 
 <body>
 <h3>Add User Form</h3>
-<form action="#" th:action="@{/user}" th:object="${user}" method="post">
-    <p>Last name: <input type="text" th:field="*{lastName}"/></p>
-    <p>First name: <input type="text" th:field="*{firstName}"/></p>
-    <p>Middle name: <input type="text" th:field="*{middleName}"/></p>
-    <p>Age: <input type="text" th:field="*{age}"/></p>
-    <p>Salary: <input type="text" th:field="*{salary}"/></p>
-    <p>Email: <input type="text" th:field="*{email}"/></p>
-    <p>Work Addres: <input type="text" th:field="*{workAddres}"/></p>
+<form action="#" th:action="@{/user}" th:object="${user}"  method="post">
+    <table cellspacing="10">
+        <tr>
+            <td>Last name:</td>
+            <td><input type="text" th:field="*{lastName}" required="required" pattern="[a-zA-Z]{1,20}"/></td>
+        </tr>
+        <tr>
+            <td>First name:</td>
+            <td><input type="text" th:field="*{firstName}" required="required" pattern="[a-zA-Z]{1,20}"/></td>
+        </tr>
+        <tr>
+            <td>Middle name:</td>
+            <td><input type="text" th:field="*{middleName}" required="required" pattern="[a-zA-Z]{1,20}"/></td>
+        </tr>
+        <tr>
+            <td>Age:</td>
+            <td><input type="number" th:field="*{age}" required="required" min="14" max="120" /></td>
+        </tr>
+        <tr>
+            <td>Salary:</td>
+            <td><input type="text" th:field="*{salary}" required="required" pattern="[0-9.]{3,10}" /></td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td><input type="text" th:field="*{email}" required="required" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" /></td>
+        </tr>
+        <tr>
+            <td>Work Addres:</td>
+            <td><input type="text" th:field="*{workAddres}" required="required" pattern="[a-zA-Z0-9._- ]{5,40}" /></td>
+        </tr>
+    </table>
     <p><input type="submit" value="Submit"/><input type="reset" value="Reset"/></p>
-</form >
+</form>
 
 <br>
 
-<p> <h3>Send mail</h3></p>
+<p>
+<h3>Send mail</h3></p>
 <form action="#" th:action="@{/send}" th:object="${user}" method="post">
+
+
+    <table cellspacing="10">
+        <tr>
+            <td>Email:</td>
+            <td><input type="text" th:field="*{email}"/></td>
+        </tr>
+        <tr>
+            <td>Message:</td>
+            <td><input type="text" th:field="*{message}" style="height:80px;"/></td>
+        </tr>
+
+    </table>
+
     <p><input type="submit" value="Send mail"/></p>
-</form >
+</form>
 
 <br>
-<p> <h3>Find User from file</h3></p>
+<p>
+<h3>Find User from file</h3></p>
 <form action="#" th:action="@{/finduser}" th:object="${user}" method="post">
     <p>First name: <input type="text" th:field="*{firstName}"/></p>
     <p>Last name: <input type="text" th:field="*{lastName}"/></p>
     <p><input type="submit" value="Find"/><input type="reset" value="Reset"/></p>
-</form >
+</form>
 
 <br>
-<p> <h3>Add User from file</h3></p>
-
-<form method="post" enctype="multipart/form-data"   action="/upload">
-    File: <input type="file"   name="file"><br />
+<p>
+<h3>Add User from file</h3></p>
+<form method="post" enctype="multipart/form-data" action="/upload">
+    File: <input type="file" name="file"><br/>
     <br>
     Press here to upload the file! <input type="submit" value="Upload">
 </form>
-
-
-
-
 </body>
 </html>

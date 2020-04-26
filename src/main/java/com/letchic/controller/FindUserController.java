@@ -1,28 +1,29 @@
 package com.letchic.controller;
 
-
 import com.letchic.model.User;
 import com.letchic.services.Reader;
 import eu.bitwalker.useragentutils.UserAgent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.servlet.support.RequestContextUtils;
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @Controller
 public class FindUserController {
-
 
     @Autowired
     private Reader reader;
 
     @PostMapping("/finduser")
-    public String userSubmit(@ModelAttribute User user, HttpServletRequest request) {
+    public String userSubmit(User user, HttpServletRequest request) {
         List<String[]> list = new ArrayList<>();
         list = reader.readFromCsvFile(";", "users.csv");
         for (String[] str : list) {
@@ -35,15 +36,23 @@ public class FindUserController {
                     user.setWorkAddres(str[6]);
 
                     UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
-                    System.out.println(userAgent.getBrowser().getName() + " " + userAgent.getBrowserVersion());
                     user.setBrowserName (userAgent.getBrowser().getName());
 
-                    Date date = new Date();
-                    //String formattedDate = dateFormat.setTimeZone(TimeZone.getTimeZone(userTimeZone));
+                    LocalDateTime today = LocalDateTime.now();
+                    ZonedDateTime zonedDateTime = ZonedDateTime.of(today, resolveZoneId(request));
+                    String formattedDateTime = DateTimeFormatter
+                            .ofPattern("yyyy-MM-dd HH:mm")
+                            .format(zonedDateTime);
+                    user.setTime(formattedDateTime);
                     return "userFound";
                 }
             }
         }
         return "notFound";
+    }
+
+    private ZoneId resolveZoneId(HttpServletRequest request) {
+        TimeZone timeZone = RequestContextUtils.getTimeZone(request);
+        return (timeZone != null ? timeZone.toZoneId() : ZoneId.systemDefault());
     }
 }

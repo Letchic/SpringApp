@@ -7,6 +7,7 @@
 
 <body>
 <h1>User Information</h1>
+    <p th:text=" ${user.result}"/>
     <p th:text="'Last Name: ' + ${user.lastName}"/>
     <p th:text="'First Name: ' + ${user.firstName}"/>
     <p th:text="'Middle Name: ' + ${user.middleName}"/>
